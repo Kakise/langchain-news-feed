@@ -154,4 +154,8 @@ def get_google_provider_cfg():
 
 
 if __name__ == "__main__":
-    app.run(host=os.environ.get("FLASK_RUN_HOST"), ssl_context="adhoc")
+    app.run(
+        host=os.environ.get("FLASK_RUN_HOST", "0.0.0.0"),
+        port=os.environ.get("FLASK_RUN_PORT", 5000),
+        ssl_context="adhoc",
+    )
