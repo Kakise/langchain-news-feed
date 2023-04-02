@@ -1,4 +1,4 @@
-ARG APP_IMAGE=python:3.11.1-alpine
+ARG APP_IMAGE=python:3.11-alpine
 
 FROM $APP_IMAGE AS base
 
@@ -9,7 +9,7 @@ WORKDIR /install
 
 COPY requirements.txt /requirements.txt
 
-RUN pip install --install-option="--prefix=/install" -r /requirements.txt
+RUN pip install --prefix=/install -r /requirements.txt
 
 FROM base
 ENV FLASK_APP app.py
