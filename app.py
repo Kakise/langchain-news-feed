@@ -3,17 +3,12 @@ import json
 import os
 import sqlite3
 
+import requests
 # Third party libraries
 from flask import Flask, redirect, request, url_for
-from flask_login import (
-    LoginManager,
-    current_user,
-    login_required,
-    login_user,
-    logout_user,
-)
+from flask_login import (LoginManager, current_user, login_required,
+                         login_user, logout_user)
 from oauthlib.oauth2 import WebApplicationClient
-import requests
 
 # Internal imports
 from db import init_db_command
@@ -22,9 +17,7 @@ from user import User
 # Configuration
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", None)
 GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", None)
-GOOGLE_DISCOVERY_URL = (
-    "https://accounts.google.com/.well-known/openid-configuration"
-)
+GOOGLE_DISCOVERY_URL = "https://accounts.google.com/.well-known/openid-configuration"
 
 # Flask app setup
 app = Flask(__name__)
@@ -136,9 +129,7 @@ def callback():
 
     # Create a user in our db with the information provided
     # by Google
-    user = User(
-        id_=unique_id, name=users_name, email=users_email, profile_pic=picture
-    )
+    user = User(id_=unique_id, name=users_name, email=users_email, profile_pic=picture)
 
     # Doesn't exist? Add to database
     if not User.get(unique_id):
@@ -163,4 +154,4 @@ def get_google_provider_cfg():
 
 
 if __name__ == "__main__":
-    app.run(ssl_context="adhoc")
+    app.run(host=os.environ.get("FLASK_RUN_HOST"), ssl_context="adhoc")
