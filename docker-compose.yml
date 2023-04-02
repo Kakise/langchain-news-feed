@@ -3,6 +3,6 @@ services:
   app:
     build: .
     env_file:
-      - stacks.env
+      - stack.env
     ports:
       - "5000:5000"
