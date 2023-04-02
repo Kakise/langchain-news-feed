@@ -1,0 +1,9 @@
+requests
+Flask
+oauthlib
+pyOpenSSL
+Flask-Login
+langchain
+OpenAI
+bs4
+tiktoken
