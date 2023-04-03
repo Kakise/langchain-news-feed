@@ -1,0 +1,12 @@
+runtime: python39
+
+env_variables:
+  SECRET_KEY: ""
+  GOOGLE_CLIENT_ID: ""
+  GOOGLE_CLIENT_SECRET: ""
+  MONGO_URI: ""
+  OPENAI_API_KEY: ""
+
+handlers:
+- url: /.*
+  script: auto

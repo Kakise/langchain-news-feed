@@ -1,0 +1,18 @@
+{% if user %}
+<pre>
+{{ user|tojson }}
+</pre>
+<form method="post" action="/news/add">
+    <input type="text" name="link">
+    <input type="submit" value="Send news link">
+</form>
+{% for news in newsfeed %}
+    <div>
+        <a href="{{ news.link }}">{{ news.link }}</a>
+        <p>{{news.excerpt}}</p>
+    </div>
+{% endfor %}
+<a href="/logout">logout</a>
+{% else %}
+<a href="/login">login</a>
+{% endif %}
