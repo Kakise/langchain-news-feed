@@ -4,3 +4,9 @@ __pycache__
 sqlite_db
 .DS_Store
 app.yaml
+.env.dev
+.env.prod
+static
+node_modules
+package.json
+package-lock.json

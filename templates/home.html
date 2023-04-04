@@ -1,18 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/static/main.css" rel="stylesheet">
+</head>
+<body>
+<section class="mb-32 text-gray-800 text-center md:text-left py-10">
+{% for news in newsfeed %}
+<div class="flex flex-wrap mb-6">
+
+<div class="grow-0 shrink-0 basis-auto w-full md:w-3/12 px-3 mb-6 md:mb-0 ml-auto">
+    <div
+      class="relative overflow-hidden bg-no-repeat bg-cover relative overflow-hidden bg-no-repeat bg-cover ripple shadow-lg rounded-lg mb-6"
+      data-mdb-ripple="true" data-mdb-ripple-color="light">
+      <img src="https://s.wordpress.com/mshots/v1/{{news.link}}"
+        class="w-full" alt="" />
+      <a href="{{news.link}}">
+        <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 hover:opacity-100 transition duration-300 ease-in-out"
+          style="background-color: rgba(251, 251, 251, 0.2)"></div>
+      </a>
+    </div>
+  </div>
+  <div class="grow-0 shrink-0 basis-auto w-full md:w-9/12 xl:w-7/12 px-3 mb-6 md:mb-0 mr-auto">
+    <h5 class="text-lg font-bold mb-3"><a href="{{news.link}}">{{news.title}}</a></h5>
+    <p class="text-gray-500 mb-6">
+      <small>Added <u>{{news.date}}</u> by
+        <a href="" class="text-gray-900">{{news.author}}</a></small>
+    </p>
+    <p class="text-gray-500">
+        {{news.excerpt}}
+    </p>
+  </div>
+</div>
+{% endfor %}
+</section>
 {% if user %}
-<pre>
-{{ user|tojson }}
-</pre>
 <form method="post" action="/news/add">
     <input type="text" name="link">
     <input type="submit" value="Send news link">
 </form>
-{% for news in newsfeed %}
-    <div>
-        <a href="{{ news.link }}">{{ news.link }}</a>
-        <p>{{news.excerpt}}</p>
-    </div>
-{% endfor %}
 <a href="/logout">logout</a>
 {% else %}
 <a href="/login">login</a>
 {% endif %}
+</body>
+</html>

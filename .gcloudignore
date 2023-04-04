@@ -27,3 +27,6 @@ sqlite_db
 
 docker-compose.yml
 Dockerfile
+
+src/
+node_modules/

@@ -1,10 +1,13 @@
 from flask import Flask, url_for, session, request
 from flask import render_template, redirect
 from authlib.integrations.flask_client import OAuth
+from dotenv import load_dotenv
 
 import os
 
 from news import News, NewsFeed
+
+load_dotenv(".env.dev")
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", os.urandom(24))
@@ -32,7 +35,7 @@ def add_news():
     if not session.get('user') or session.get('user')['email'].split("@")[-1] != "artefact.com":
         return redirect('/login')
     # get link from post param
-    news = News(request.form.get("link"))
+    news = News(request.form.get("link"), session.get('user'))
     news.save()
     return redirect('/')
 
