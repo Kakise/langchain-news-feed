@@ -7,7 +7,8 @@
 </head>
 <body>
 <section class="mb-32 text-gray-800 text-center md:text-left py-10">
-{% for news in newsfeed %}
+    <h2 class="text-3xl font-bold mb-12 text-center">News Feed</h2>
+    {% for news in newsfeed %}
 <div class="flex flex-wrap mb-6">
 
 <div class="grow-0 shrink-0 basis-auto w-full md:w-3/12 px-3 mb-6 md:mb-0 ml-auto">
@@ -22,7 +23,7 @@
       </a>
     </div>
   </div>
-  <div class="grow-0 shrink-0 basis-auto w-full md:w-9/12 xl:w-7/12 px-3 mb-6 md:mb-0 mr-auto">
+  <div class="grow-0 shrink-0 basis-auto w-full md:w-9/12 xl:w-7/12 px-3 mb-6 md:mb-0 mr-auto bg-no-repeat bg-cover relative overflow-hidden bg-no-repeat bg-cover ripple shadow-lg rounded-lg ml-6">
     <h5 class="text-lg font-bold mb-3"><a href="{{news.link}}">{{news.title}}</a></h5>
     <p class="text-gray-500 mb-6">
       <small>Added <u>{{news.date}}</u> by
@@ -35,14 +36,28 @@
 </div>
 {% endfor %}
 </section>
+<div class="flex m-12">
+    <form method="post" action="/news/add" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="link">
+          Add a new article:
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="link" name="link" type="text" placeholder="Enter link here">
+      </div>
+      <div class="flex items-center justify-between">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+          Send news link
+        </button>
+      </div>
+    </form>
+  </div>
 {% if user %}
-<form method="post" action="/news/add">
-    <input type="text" name="link">
-    <input type="submit" value="Send news link">
-</form>
-<a href="/logout">logout</a>
+
+<a href="/logout" class="m-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Logout</a>
+
 {% else %}
-<a href="/login">login</a>
+
+<a href="/login" class="m-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</a>
 {% endif %}
 </body>
 </html>

@@ -23,6 +23,8 @@ class News:
 
         soup = BeautifulSoup(text, "html.parser")
         text_content = soup.get_text()
+        if len(text_content) > 3700:
+            text_content = text_content[:3700]
 
         texts = text_splitter.split_text(text_content)
 
@@ -70,4 +72,4 @@ class NewsFeed:
     def get_one(self):
         return self.news[-1]
     def get_all_news(self):
-        return self.news
+        return self.news[::-1]
