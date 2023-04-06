@@ -6,7 +6,7 @@ sqlite_db
 app.yaml
 .env.dev
 .env.prod
-static
+static/main.css
 node_modules
 package.json
 package-lock.json

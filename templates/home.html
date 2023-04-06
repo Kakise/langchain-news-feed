@@ -1,63 +1,104 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/static/main.css" rel="stylesheet">
 </head>
-<body>
-<section class="mb-32 text-gray-800 text-center md:text-left py-10">
-    <h2 class="text-3xl font-bold mb-12 text-center">News Feed</h2>
-    {% for news in newsfeed %}
-<div class="flex flex-wrap mb-6">
 
-<div class="grow-0 shrink-0 basis-auto w-full md:w-3/12 px-3 mb-6 md:mb-0 ml-auto">
-    <div
-      class="relative overflow-hidden bg-no-repeat bg-cover relative overflow-hidden bg-no-repeat bg-cover ripple shadow-lg rounded-lg mb-6"
-      data-mdb-ripple="true" data-mdb-ripple-color="light">
-      <img src="https://s.wordpress.com/mshots/v1/{{news.link}}"
-        class="w-full" alt="" />
-      <a href="{{news.link}}">
-        <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 hover:opacity-100 transition duration-300 ease-in-out"
-          style="background-color: rgba(251, 251, 251, 0.2)"></div>
-      </a>
+<body>
+  <section class="mb-32 text-gray-800 text-center md:text-left py-10">
+    <h2 class="text-3xl font-bold mb-12 text-center"><a href="/">News Feed</a></h2>
+    {% if query %}
+    <h2 class="text-xl font-bold mb-12 text-center"><a href="/">Search result:</a></h2>
+    {% endif %}
+    <form action="/news/search" method="post">
+      <div class="flex justify-center w-full">
+        <div class="mb-3 mx-36 w-full">
+          <div class="relative mb-4 flex w-full flex-wrap items-stretch">
+            <form action="/search" method="post">
+              <input type="search" name='query' id='search-text'
+                class="relative m-0 -mr-px block w-[1%] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:text-neutral-200 dark:placeholder:text-neutral-200"
+                placeholder="Search" aria-label="Search" aria-describedby="button-addon1" value="{{query}}"/>
+              <button
+                class="relative z-[2] flex items-center rounded-r bg-primary px-6 py-2.5 text-xs font-medium uppercase leading-tight shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
+                type="submit" id="button-search" data-te-ripple-init data-te-ripple-color="light">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
+                  <path fill-rule="evenodd"
+                    d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                    clip-rule="evenodd" />
+                </svg>
+              </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    {% for news in newsfeed %}
+    <div class="flex flex-wrap mb-6">
+
+      <div class="grow-0 shrink-0 basis-auto w-full md:w-3/12 px-3 mb-6 md:mb-0 ml-auto">
+        <div
+          class="relative overflow-hidden bg-no-repeat bg-cover relative overflow-hidden bg-no-repeat bg-cover ripple shadow-lg rounded-lg mb-6"
+          data-mdb-ripple="true" data-mdb-ripple-color="light">
+          <img src="https://s.wordpress.com/mshots/v1/{{news.link}}" class="w-full" alt="" />
+          <a href="{{news.link}}">
+            <div
+              class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 hover:opacity-100 transition duration-300 ease-in-out"
+              style="background-color: rgba(251, 251, 251, 0.2)"></div>
+          </a>
+        </div>
+      </div>
+      <div
+        class="grow-0 shrink-0 basis-auto w-full md:w-9/12 xl:w-7/12 px-3 mb-6 md:mb-0 mr-auto bg-no-repeat bg-cover relative overflow-hidden bg-no-repeat bg-cover ripple shadow-lg rounded-lg ml-6">
+        <h5 class="text-lg font-bold mb-3"><a href="{{news.link}}">{{news.title}}</a></h5>
+        <p class="text-gray-500 mb-6">
+          <small>Added <u>{{news.date}}</u> by
+            <a href="" class="text-gray-900">{{news.author}}</a></small>
+        </p>
+        <p class="text-gray-500">
+          {{news.excerpt}}
+        </p>
+        {% if editMode %}
+        <form method="post" action="/news/delete">
+          <input type="hidden" name="link" value="{{news.link}}">
+          <button class="bottom-0 right-0 p-1 bg-red-500 text-white hover:bg-red-700" type="submit">Delete</button>
+        </form>
+        {% endif %}
+      </div>
+
     </div>
-  </div>
-  <div class="grow-0 shrink-0 basis-auto w-full md:w-9/12 xl:w-7/12 px-3 mb-6 md:mb-0 mr-auto bg-no-repeat bg-cover relative overflow-hidden bg-no-repeat bg-cover ripple shadow-lg rounded-lg ml-6">
-    <h5 class="text-lg font-bold mb-3"><a href="{{news.link}}">{{news.title}}</a></h5>
-    <p class="text-gray-500 mb-6">
-      <small>Added <u>{{news.date}}</u> by
-        <a href="" class="text-gray-900">{{news.author}}</a></small>
-    </p>
-    <p class="text-gray-500">
-        {{news.excerpt}}
-    </p>
-  </div>
-</div>
-{% endfor %}
-</section>
-<div class="flex m-12">
+    {% endfor %}
+  </section>
+
+  {% if user %}
+  <div class="flex m-12">
     <form method="post" action="/news/add" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="link">
           Add a new article:
         </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="link" name="link" type="text" placeholder="Enter link here">
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="link" name="link" type="text" placeholder="Enter link here">
       </div>
       <div class="flex items-center justify-between">
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="submit">
           Send news link
         </button>
       </div>
     </form>
   </div>
-{% if user %}
+  <a href="/logout"
+    class="m-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Logout</a>
 
-<a href="/logout" class="m-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Logout</a>
+  {% else %}
 
-{% else %}
-
-<a href="/login" class="m-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</a>
-{% endif %}
+  <a href="/login"
+    class="m-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</a>
+  {% endif %}
 </body>
+
 </html>
