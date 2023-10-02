@@ -1,4 +1,4 @@
-# Getting started
+# Getting Started
 
 Copy the app.template.yaml file to app.yaml
 
